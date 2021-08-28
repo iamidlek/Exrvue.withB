@@ -22,10 +22,13 @@
       </ul>
     </nav>
     <Index
+      :class="{ view: vindex }"
       class="ready index" />
     <Search
+      :class="{ view: vsearch }"
       class="ready search" />
     <Cross
+      :class="{ view: vcross }"
       class="ready cross" />
   </div>
 </template>
@@ -44,16 +47,26 @@ export default {
   data(){
     return {
       now: 'index',
-      ind: document.querySelector('.ready.index'),
-      sea: document.querySelector('.ready.search'),
-      cro: document.querySelector('.ready.cross')
+      vindex: true,
+      vsearch: false,
+      vcross: false
     }
   },
   methods:{
     tab(e) {
       this.now = e.target.className
       if (this.now === 'index'){
-        console.log(this.ind)
+        this.vindex = true
+        this.vsearch = false
+        this.vcross = false
+      } else if (this.now === 'search') {
+        this.vsearch = true
+        this.vindex = false
+        this.vcross = false
+      } else {
+        this.vcross = true
+        this.vindex = false
+        this.vsearch = false
       }
     }
   }
@@ -80,7 +93,7 @@ $white-font: #F2E5D5;
   box-sizing: border-box;
   height: 100vh;
   position: relative;
-  background-color: $search;
+  background-color: $other;
   transition: background-color 1s, border 1s;
   @include outbord($search);
   &.index{
@@ -96,11 +109,13 @@ $white-font: #F2E5D5;
     border-color: $outcross;
   }
   ul {
-      list-style: none;
-      display: flex;
-      text-align: center;
-      margin: 0;
-      padding: 0;
+    list-style: none;
+    display: flex;
+    position: relative;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    z-index: 5;
       li {
         flex: 1;
         line-height: 2.4rem;
@@ -129,7 +144,8 @@ $white-font: #F2E5D5;
     opacity: 0;
     transform: scale(0.1);
     transform-origin: 0 0;
-    transition: transform .45s ease-in-out, opacity .45s;
+    transition: all .45s ease-in-out;
+    background-color: $index;
   }
   .ready.index{
     background-color: $index;
@@ -139,12 +155,14 @@ $white-font: #F2E5D5;
     background-color: $search;
   }
   .ready.cross{
-    left: 67%;
+    left: 66.5%;
     background-color: $cross;
   }
   .ready.view{
+    left: 0;
     transform: scale(1);
     opacity: 1;
+    z-index: 1;
   }
 }
 </style>
