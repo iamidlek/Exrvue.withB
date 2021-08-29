@@ -1,15 +1,21 @@
 <template>
   <div>
-    <h1>Testament</h1>
-    <div :class="'old'">
-      <ol>
-        <li>d</li>
-      </ol>
-    </div>
-    <div :class="'new'">
-      <ol>
-        <li>d</li>
-      </ol>
+    <div class="list">
+      <div class="select">
+        <h1>Testament</h1>
+        <button>Old</button>
+        <button>New</button>
+      </div>
+      <div class="old">
+        <ol>
+          <li>d</li>
+        </ol>
+      </div>
+      <div class="new">
+        <ol>
+          <li>d</li>
+        </ol>
+      </div>
     </div>
   </div>
 </template>
@@ -21,19 +27,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .index {
-//   position: absolute;
-//   top: 2.4rem;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-start;
-//   align-items: center;
-//   padding: 7px;
-//   h1 {
-//     font-size: 20px;
-//   }
-// }
+.list {
+  position: absolute;
+  top: 2.8rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 7px;
+  .select{
+    h1 {
+      line-height: 1;
+      transition: background-position 1s, background-color 1s;
+      text-align: center;
+      font-size: calc(10vw + 1rem);
+      font-weight: 400;
+      color: #F28177;
+      margin: 1rem 0;
+      -webkit-mask-image: 
+      -webkit-gradient(linear,left top,left bottom,
+      color-stop(0,#FFF),
+      color-stop(.5,#FFF),
+      color-stop(1,transparent));
+    }
+
+  }
+}
 </style>
