@@ -160,6 +160,7 @@ $white-font: #F2E5D5;
   }
   .ready.view{
     left: 0;
+    overflow: auto;
     transform: scale(1);
     opacity: 1;
     z-index: 1;
