@@ -3,17 +3,29 @@
     <div class="list">
       <h1>Testament</h1>
       <div class="select">
-        <button>Old</button>
-        <button>New</button>
+        <button
+          ref="old"
+          @click="select">
+          Old
+        </button>
+        <button
+          ref="new"
+          @click="select">
+          New
+        </button>
       </div>
-      <div class="old">
+      <div
+        v-if="btns === 'Old'"
+        class="oldlist">
         <ol>
-          <li>d</li>
+          <li>old</li>
         </ol>
       </div>
-      <div class="new">
+      <div
+        v-if="btns === 'New'"
+        class="newlist">
         <ol>
-          <li>d</li>
+          <li>new</li>
         </ol>
       </div>
     </div>
@@ -22,7 +34,24 @@
 
 <script>
 export default {
-  
+  data() {
+    return {
+      btns : 'none'
+    }
+  },
+  methods: {
+    select(e) {
+      if (e.target.innerText === this.btns) {
+        this.btns = 'none';
+        e.target.classList.remove('checked')
+      } else {
+        this.$refs.old.classList.remove('checked')
+        this.$refs.new.classList.remove('checked')
+        this.btns = e.target.innerText
+        e.target.classList.add('checked') 
+      }      
+    }
+  }
 }
 </script>
 
@@ -69,10 +98,51 @@ $border-line: #DEB887;
       font-size: 2rem;
       color: $white-font;
       background: transparent;
-      border-radius: 40%;
+      border-radius: 30%;
       border-color: $border-line;
+      transition: border-radius .5s;
+      position: relative;
       &:first-child{
         margin-right: 5vh;
+      }
+      &:first-child::before{
+        content: '';
+        display: block;
+        position: absolute;
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background: radial-gradient($outcross 5%, transparent 70%);
+        opacity: 0;
+        transition: opacity .4s;
+      }
+      &:last-child::before{
+        content: '';
+        display: block;
+        position: absolute;
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background: radial-gradient($outcross 5%, transparent 70%);
+        opacity: 0;
+        transition: opacity .4s;
+      }
+      &.checked{
+        border-radius: 50%;
+        &:first-child::before {
+          transition: opacity .9s;
+          opacity: 1;
+        }
+        &:last-child::before {
+          transition: opacity .9s;
+          opacity: 1;
+        }
       }
     }
   }
