@@ -158,5 +158,21 @@ $border-line: #DEB887;
       }
     }
   }
+  ol {
+    width: 100%;
+    margin-top: 7vh;
+    display: flex;
+    flex-wrap: wrap;
+    li {
+      width: 29.8vw;
+      line-height: 7vh;
+      flex: 1 0 auto;
+      text-align: center;
+      color: $white-font;
+    }
+    li:hover {
+      color: $cross;
+    }
+  }
 }
 </style>
