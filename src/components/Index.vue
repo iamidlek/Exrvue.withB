@@ -14,29 +14,31 @@
           New
         </button>
       </div>
-      <div
-        v-if="btns === 'Old'"
-        class="oldlist">
-        <ol>
-          <li
-            v-for="old in olds"
-            :key="old"
-            :name="old">
-            {{ old }}
-          </li>
-        </ol>
-      </div>
-      <div
-        v-if="btns === 'New'"
-        class="newlist">
-        <ol>
-          <li
-            v-for="newb in news"
-            :key="newb"
-            :name="newb">
-            {{ newb }}
-          </li>
-        </ol>
+      <div class="scroll">
+        <div
+          v-if="btns === 'Old'"
+          class="oldlist">
+          <ol>
+            <li
+              v-for="old in olds"
+              :key="old"
+              :name="old">
+              {{ old }}
+            </li>
+          </ol>
+        </div>
+        <div
+          v-if="btns === 'New'"
+          class="newlist">
+          <ol>
+            <li
+              v-for="newb in news"
+              :key="newb"
+              :name="newb">
+              {{ newb }}
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   </div>
@@ -159,20 +161,34 @@ $border-line: #DEB887;
       }
     }
   }
-  ol {
-    width: 100%;
-    margin: 7vh 0 10vh;
-    display: flex;
-    flex-wrap: wrap;
-    li {
-      text-align: center;
-      width: 29.8vw;
-      line-height: 7vh;
-      flex: 1 0 auto;
-      color: $white-font;
+  .scroll {
+    position: relative;
+    overflow: auto;
+    margin: 4vh 0 2vh;
+    padding: 3vh 0 3vh;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera*/
     }
-    li:hover {
-      color: $cross;
+    ol {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      li {
+        text-align: center;
+        // width: 29.8vw;
+        width: 50vw;
+        font-size: 4vh;
+        line-height: 7vh;
+        flex: 1 0 auto;
+        color: $white-font;
+      }
+      li:hover {
+        color: $cross;
+      }  
     }
   }
 }
