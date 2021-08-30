@@ -73,7 +73,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $index: #1B3C59;
 $search: #A18E7C;
 $cross: #F28177;
