@@ -17,6 +17,26 @@
           <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
           <li>3.And God said, Let there be light: and there was light.</li>
           <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
+                    
+          <li>1.In the beginning God created the heaven and the earth.</li>
+          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
+          <li>3.And God said, Let there be light: and there was light.</li>
+          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
+        
+          <li>1.In the beginning God created the heaven and the earth.</li>
+          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
+          <li>3.And God said, Let there be light: and there was light.</li>
+          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
+                    
+          <li>1.In the beginning God created the heaven and the earth.</li>
+          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
+          <li>3.And God said, Let there be light: and there was light.</li>
+          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
+        
+          <li>1.In the beginning God created the heaven and the earth.</li>
+          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
+          <li>3.And God said, Let there be light: and there was light.</li>
+          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
         </ul>
       </div>
     </form>
@@ -43,7 +63,6 @@ $border-input: #F7F7F7;
   .search-form{
     width: 80vw;
     margin: 5rem auto 0;
-    // overflow: hidden;
     input {
       width: 70vw;
       display: block;
@@ -62,8 +81,10 @@ $border-input: #F7F7F7;
     .resultlist {
       position: relative;
       overflow: auto;
-      height: 35vh;
-      margin: 5.5vh 0 5vh;
+      top: 0;
+      bottom: 0;
+      max-height: 65vh;
+      margin: 5vh 0 5vh;
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
       &::-webkit-scrollbar {
@@ -76,19 +97,20 @@ $border-input: #F7F7F7;
         li {
           text-align: start;
           width: 100%;
-          font-size: 3vh;
-          line-height: 4vh;
+          height: 14vh;
+          overflow: auto;
+          padding: 8px 10px;
+          font-size: 3.5vh;
+          line-height: 3.8vh;
           color: $white-font;
-        }
+          & + li {
+            margin-top: 10px;
+          }}
         li:nth-child(even){
-          background: 
-          linear-gradient(to bottom,  
-          $outcross 0%,#EFEFEF 100%);
+          background: $index;
         }
         li:nth-child(odd){
-          background: 
-          linear-gradient(to top,  
-          $outcross 0%,transparent 100%);
+          background: $cross;
         }
       }
     }
