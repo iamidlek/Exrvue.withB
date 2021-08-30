@@ -160,15 +160,9 @@ $white-font: #F2E5D5;
   }
   .ready.view{
     left: 0;
-    overflow: auto;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
     transform: scale(1);
     opacity: 1;
     z-index: 1;
-    &::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera*/
-    }
   }
 }
 </style>
