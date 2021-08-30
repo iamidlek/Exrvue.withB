@@ -109,6 +109,7 @@ $border-line: #DEB887;
       height: 6.25rem;
       font-size: 2rem;
       color: $white-font;
+      text-align: center;
       background: transparent;
       border-radius: 30%;
       border-color: $border-line;
@@ -160,14 +161,14 @@ $border-line: #DEB887;
   }
   ol {
     width: 100%;
-    margin-top: 7vh;
+    margin: 7vh 0 10vh;
     display: flex;
     flex-wrap: wrap;
     li {
+      text-align: center;
       width: 29.8vw;
       line-height: 7vh;
       flex: 1 0 auto;
-      text-align: center;
       color: $white-font;
     }
     li:hover {
