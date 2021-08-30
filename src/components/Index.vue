@@ -14,31 +14,32 @@
           New
         </button>
       </div>
-      <div class="scroll">
-        <div
-          v-if="btns === 'Old'"
-          class="oldlist">
-          <ol>
-            <li
-              v-for="old in olds"
-              :key="old"
-              :name="old">
-              {{ old }}
-            </li>
-          </ol>
-        </div>
-        <div
-          v-if="btns === 'New'"
-          class="newlist">
-          <ol>
-            <li
-              v-for="newb in news"
-              :key="newb"
-              :name="newb">
-              {{ newb }}
-            </li>
-          </ol>
-        </div>
+
+      <div
+        v-if="btns === 'Old'"
+        class="oldlist">
+        <ol>
+          <li
+            v-for="old in olds"
+            :key="old"
+            :name="old">
+            {{ old }}
+          </li>
+        </ol>
+      </div>
+   
+     
+      <div
+        v-if="btns === 'New'"
+        class="newlist">
+        <ol>
+          <li
+            v-for="newb in news"
+            :key="newb"
+            :name="newb">
+            {{ newb }}
+          </li>
+        </ol>
       </div>
     </div>
   </div>
@@ -161,35 +162,34 @@ $border-line: #DEB887;
       }
     }
   }
-  .scroll {
-    position: relative;
-    overflow: auto;
-    margin: 4vh 0 2vh;
-    padding: 3vh 0 3vh;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-    &::-webkit-scrollbar {
+    .oldlist, 
+    .newlist{
+      position: relative;
+      overflow: auto;
+      z-index: 2;
+      height: 35vh;
+      margin: 5.5vh 0 5vh;
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+      &::-webkit-scrollbar {
       display: none; /* Chrome, Safari, Opera*/
+      }
     }
     ol {
-      width: 100%;
-      height: 100%;
       display: flex;
-      flex-wrap: wrap;
-      overflow: hidden;
+      justify-items: center;
+      flex-direction: column;
       li {
         text-align: center;
-        // width: 29.8vw;
         width: 50vw;
         font-size: 4vh;
         line-height: 7vh;
-        flex: 1 0 auto;
         color: $white-font;
       }
-      li:hover {
+      li:hover,
+      li:active {
         color: $cross;
       }  
     }
   }
-}
 </style>
