@@ -14,7 +14,11 @@
           New
         </button>
       </div>
-
+      <div class="bg">
+        <img
+          src="~/assets/bible.png"
+          alt="bible" />
+      </div>
       <div
         v-if="btns === 'Old'"
         class="oldlist">
@@ -90,10 +94,10 @@ $border-line: #DEB887;
   align-items: center;
   padding: 0.4375rem;
   h1 {
-    line-height: 1;
     text-align: center;
     font-size: calc(10vw + 1rem);
     font-weight: 700;
+    line-height: 1;
     color: $cross;
     margin: 2rem 0;
     -webkit-mask-image: 
@@ -160,6 +164,16 @@ $border-line: #DEB887;
           opacity: 1;
         }
       }
+    }
+  }
+  .bg {
+    position: relative;
+    height: 0;    
+    img {
+      display: block;
+      margin-top: 2.2rem;
+      width: 200px;
+      opacity: 0.3;
     }
   }
     .oldlist, 
