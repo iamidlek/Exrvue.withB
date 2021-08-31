@@ -103,6 +103,11 @@ $border-input: #F7F7F7;
           font-size: 3.5vh;
           line-height: 3.8vh;
           color: $white-font;
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+          &::-webkit-scrollbar {
+          display: none; /* Chrome, Safari, Opera*/
+          }
           & + li {
             margin-top: 10px;
           }}
