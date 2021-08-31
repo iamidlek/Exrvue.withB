@@ -3,6 +3,7 @@
     <form class="search-form">
       <input
         type="text"
+        @keyup="searchMatch"
         placeholder="God created heaven"
         onfocus="this.placeholder = ''"
         onblur="this.placeholder = 'God created heaven'" />
@@ -45,7 +46,38 @@
 
 <script>
 export default {
-  
+  data(){
+    return{
+      koLangBible: []
+    }
+  },
+  mounted() {
+    this.koBible()
+  },
+  methods: {
+    koBible() {
+      fetch('../../ko_ko.json')
+      .then(chunk => chunk.json())
+      .then(data => this.koLangBible.push(...data));
+    },
+    conlog(){
+      this.koLangBible.forEach(jang => {
+        console.log(jang.abbrev)
+      })
+    },
+    matching(val,dict){
+      return dict.chapters.filter(paragraph =>{
+        const regex = new RegExp(val, 'gi');
+        return paragraph.match(regex)
+      });
+    },
+    searchMatch(){
+      // const matchList = this.matching(e.target.value,this.koLangBible)
+      this.koLangBible.forEach(obj => obj.chapters.forEach(
+        chapter => chapter.forEach((paragrah, i) => console.log(i+1, paragrah))
+      )
+      )},
+  },
 }
 </script>
 
