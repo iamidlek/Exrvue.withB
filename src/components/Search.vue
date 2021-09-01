@@ -141,6 +141,9 @@ $border-input: #F7F7F7;
           & + li {
             margin-top: 10px;
           }
+          & .neyong{
+            color: $cross;
+          }
         }
         li:nth-child(even){
           background: $index;
