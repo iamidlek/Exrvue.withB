@@ -117,6 +117,8 @@ $border-line: #DEB887;
       font-size: 2rem;
       color: $white-font;
       text-align: center;
+      text-align:-moz-center;
+      text-align:-webkit-center;
       background: transparent;
       border-radius: 30%;
       border-color: $border-line;
