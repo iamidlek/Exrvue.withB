@@ -41,18 +41,22 @@ export default {
     matching(val,dict){
       return dict.filter(obje =>{
         const regex = new RegExp(val, 'gi');
-        return obje.name.match(regex) || obje.abb.match(regex) || String(obje.chapter).match(regex) || String(obje.verse).match(regex) || obje.content.match(regex)
+        // return obje.name.match(regex) || obje.abb.match(regex) || String(obje.chapter).match(regex) || String(obje.verse).match(regex) || obje.content.match(regex)
+        return obje.content.match(regex)
       });
     },
     searchMatch(e){
+      if (e.target.value === '') {
+        return false
+      }
       const matched = this.matching(e.target.value,this.kjvBible)
       const html = matched.map(item => {
         const regex = new RegExp(e.target.value, 'gi');
-        const name = item.name.replace(regex, `<span class="guan" style="color:#ff0a00">${e.target.value}</span>`);
+        const name = item.name.replace(regex, `<span class="guan">${e.target.value}</span>`);
       //   const abb = item.abb.replace(regex, `<span class="guanab">${e.target.value}</span>`);
         const chapter = String(item.chapter).replace(regex, `<span class="zang">${e.target.value}</span>`);
         const verse = String(item.verse).replace(regex, `<span class="zul">${e.target.value}</span>`);
-        const content = item.content.replace(regex, `<span class="neyong">${e.target.value}</span>`);
+        const content = item.content.replace(regex, `<span class="neyong" style="color:#ff0a00">${e.target.value}</span>`);
         return `
         <li>
           <span class="name">${name}</span>
