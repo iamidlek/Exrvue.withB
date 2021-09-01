@@ -8,36 +8,9 @@
         onfocus="this.placeholder = ''"
         onblur="this.placeholder = 'God created heaven'" />
       <div class="resultlist">
-        <ul class="suggestions">
-          <li>1.In the beginning God created the heaven and the earth.</li>
-          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
-          <li>3.And God said, Let there be light: and there was light.</li>
-          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
-        
-          <li>1.In the beginning God created the heaven and the earth.</li>
-          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
-          <li>3.And God said, Let there be light: and there was light.</li>
-          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
-                    
-          <li>1.In the beginning God created the heaven and the earth.</li>
-          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
-          <li>3.And God said, Let there be light: and there was light.</li>
-          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
-        
-          <li>1.In the beginning God created the heaven and the earth.</li>
-          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
-          <li>3.And God said, Let there be light: and there was light.</li>
-          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
-                    
-          <li>1.In the beginning God created the heaven and the earth.</li>
-          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
-          <li>3.And God said, Let there be light: and there was light.</li>
-          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
-        
-          <li>1.In the beginning God created the heaven and the earth.</li>
-          <li>2.And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.</li>
-          <li>3.And God said, Let there be light: and there was light.</li>
-          <li>4.And God saw the light, that it was good: and God divided the light from the darkness.</li>
+        <ul
+          class="suggestions"
+          ref="suggestions">
         </ul>
       </div>
     </form>
@@ -48,35 +21,49 @@
 export default {
   data(){
     return{
-      koLangBible: []
+      kjvBible: []
     }
   },
   mounted() {
-    this.koBible()
+    this.enBible()
   },
   methods: {
-    koBible() {
-      fetch('../../ko_ko.json')
+    enBible() {
+      fetch('../../en_kjv_bible.json')
       .then(chunk => chunk.json())
-      .then(data => this.koLangBible.push(...data));
+      .then(data => this.kjvBible.push(...data));
     },
-    conlog(){
-      this.koLangBible.forEach(jang => {
-        console.log(jang.abbrev)
-      })
-    },
+    // conlog(){
+    //   this.koLangBible.forEach(jang => {
+    //     console.log(jang.abbrev)
+    //   })
+    // },
     matching(val,dict){
-      return dict.chapters.filter(paragraph =>{
+      return dict.filter(obje =>{
         const regex = new RegExp(val, 'gi');
-        return paragraph.match(regex)
+        return obje.name.match(regex) || obje.abb.match(regex) || String(obje.chapter).match(regex) || String(obje.verse).match(regex) || obje.content.match(regex)
       });
     },
-    searchMatch(){
-      // const matchList = this.matching(e.target.value,this.koLangBible)
-      this.koLangBible.forEach(obj => obj.chapters.forEach(
-        chapter => chapter.forEach((paragrah, i) => console.log(i+1, paragrah))
-      )
-      )},
+    searchMatch(e){
+      const matched = this.matching(e.target.value,this.kjvBible)
+      const html = matched.map(item => {
+        const regex = new RegExp(e.target.value, 'gi');
+        const name = item.name.replace(regex, `<span class="guan" style="color:#ff0a00">${e.target.value}</span>`);
+      //   const abb = item.abb.replace(regex, `<span class="guanab">${e.target.value}</span>`);
+        const chapter = String(item.chapter).replace(regex, `<span class="zang">${e.target.value}</span>`);
+        const verse = String(item.verse).replace(regex, `<span class="zul">${e.target.value}</span>`);
+        const content = item.content.replace(regex, `<span class="neyong">${e.target.value}</span>`);
+        return `
+        <li>
+          <span class="name">${name}</span>
+          <span class="chapt">${chapter}</span>
+          <span class="verse">${verse}</span>
+          <span class="cont">${content}</span>
+        </li>
+        `
+      }).join('');
+      this.$refs.suggestions.innerHTML = html
+    }
   },
 }
 </script>
@@ -142,7 +129,8 @@ $border-input: #F7F7F7;
           }
           & + li {
             margin-top: 10px;
-          }}
+          }
+        }
         li:nth-child(even){
           background: $index;
         }
