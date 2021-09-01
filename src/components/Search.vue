@@ -29,7 +29,13 @@ export default {
   },
   methods: {
     enBible() {
-      fetch('../../en_kjv_bible.json')
+      fetch('../../en_kjv_bible.json',{
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+
+    })
       .then(chunk => chunk.json())
       .then(data => this.kjvBible.push(...data));
     },
@@ -56,11 +62,12 @@ export default {
       //   const abb = item.abb.replace(regex, `<span class="guanab">${e.target.value}</span>`);
         const chapter = String(item.chapter).replace(regex, `<span class="zang">${e.target.value}</span>`);
         const verse = String(item.verse).replace(regex, `<span class="zul">${e.target.value}</span>`);
-        const content = item.content.replace(regex, `<span class="neyong" style="color:#ff0a00">${e.target.value}</span>`);
+        const content = item.content.replace(regex, `<span class="neyong">${e.target.value}</span>`);
         return `
         <li>
           <span class="name">${name}</span>
           <span class="chapt">${chapter}</span>
+          <span> : </span>
           <span class="verse">${verse}</span>
           <span class="cont">${content}</span>
         </li>
@@ -72,7 +79,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $index: #1B3C59;
 $search: #A18E7C;
 $cross: #F28177;
@@ -137,9 +144,21 @@ $border-input: #F7F7F7;
         }
         li:nth-child(even){
           background: $index;
+          & .name{
+            color: gray;
+          }
+          & .chapt, .verse{
+            color: $search;
+          }
         }
         li:nth-child(odd){
-          background: $cross;
+          background: $outcross;
+          & .name{
+            color: $index;
+          }
+          & .chapt, .verse{
+            color: $search;
+          }
         }
       }
     }
