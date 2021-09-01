@@ -1,9 +1,9 @@
 <template>
   <div class="search">
-    <form class="search-form">
+    <div class="search-form">
       <input
         type="text"
-        @keyup="searchMatch"
+        @keydown.enter="searchMatch"
         placeholder="God created heaven"
         onfocus="this.placeholder = ''"
         onblur="this.placeholder = 'God created heaven'" />
@@ -13,37 +13,19 @@
           ref="suggestions">
         </ul>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
+import kjvBible from "./en_kjv_bible.json"
 export default {
   data(){
     return{
-      kjvBible: []
+      kjvBible
     }
   },
-  mounted() {
-    this.enBible()
-  },
   methods: {
-    enBible() {
-      fetch('../../en_kjv_bible.json',{
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }
-
-    })
-      .then(chunk => chunk.json())
-      .then(data => this.kjvBible.push(...data));
-    },
-    // conlog(){
-    //   this.koLangBible.forEach(jang => {
-    //     console.log(jang.abbrev)
-    //   })
-    // },
     matching(val,dict){
       return dict.filter(obje =>{
         const regex = new RegExp(val, 'gi');
@@ -59,7 +41,6 @@ export default {
       const html = matched.map(item => {
         const regex = new RegExp(e.target.value, 'gi');
         const name = item.name.replace(regex, `<span class="guan">${e.target.value}</span>`);
-      //   const abb = item.abb.replace(regex, `<span class="guanab">${e.target.value}</span>`);
         const chapter = String(item.chapter).replace(regex, `<span class="zang">${e.target.value}</span>`);
         const verse = String(item.verse).replace(regex, `<span class="zul">${e.target.value}</span>`);
         const content = item.content.replace(regex, `<span class="neyong">${e.target.value}</span>`);
