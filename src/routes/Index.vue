@@ -1,211 +1,116 @@
 <template>
-  <div>
-    <div class="list">
-      <h1>Testament</h1>
-      <div class="select">
-        <button
-          ref="old"
-          @click="select">
-          Old
-        </button>
-        <button
-          ref="new"
-          @click="select">
-          New
-        </button>
-      </div>
-      <div class="bg">
-        <img
-          src="~/assets/bible.png"
-          alt="bible" />
-      </div>
-      <div
-        v-if="btns === 'Old'"
-        class="oldlist">
-        <ol>
-          <li
-            v-for="old in olds"
-            :key="old"
-            :name="old">
-            {{ old }}
-          </li>
-        </ol>
-      </div>
-   
-     
-      <div
-        v-if="btns === 'New'"
-        class="newlist">
-        <ol>
-          <li
-            v-for="newb in news"
-            :key="newb"
-            :name="newb">
-            {{ newb }}
-          </li>
-        </ol>
-      </div>
-    </div>
+  <div
+    class="container-fluid"
+    ref="mount">
+    <a
+      @click="refrash"
+      class="btn btn-primary index">
+      INDEX
+    </a>
+    <RouterLink
+      :to="'/'"
+      active-class="active"
+      class="btn stpage">
+      BACK
+    </RouterLink>
+    <OldIndex />
   </div>
 </template>
 
 <script>
+import OldIndex from '~/components/OldIndex'
 export default {
-  data() {
+  components: {
+    OldIndex
+  },
+  data(){
     return {
-      btns : 'none',
-      olds : [ 'Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther', 'Job', 'Psalm', 'Proverbs', 'Ecclesiastes', 'Song of Solomon', 'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi'],
-      news : ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy', 'Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation' ]
+
     }
   },
-  methods: {
-    select(e) {
-      if (e.target.innerText === this.btns) {
-        this.btns = 'none';
-        e.target.classList.remove('checked')
-      } else {
-        this.$refs.old.classList.remove('checked')
-        this.$refs.new.classList.remove('checked')
-        this.btns = e.target.innerText
-        e.target.classList.add('checked') 
-      }      
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.$refs.mount.classList.add('mounted')
+      }, 100);
+    });
+  },
+  methods:{
+    refrash() {
+      window.location.reload()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-$index: #1B3C59;
-$search: #A18E7C;
-$cross: #F28177;
-$outcross: #5B7F77;
-$other: #B1B1AC;
-$white-font: #F2E5D5;
-$border-line: #DEB887;
+@import "~/scss/style";
 
-.list {
-  position: absolute;
-  top: 2.8rem;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.4375rem;
-  h1 {
-    text-align: center;
-    font-size: calc(10vw + 1rem);
-    font-weight: 700;
-    line-height: 1;
-    color: $cross;
-    margin: 2rem 0;
-    -webkit-mask-image: 
-    -webkit-gradient(linear,left top,left bottom,
-    color-stop(0,$white-font),
-    color-stop(.5,$white-font),
-    color-stop(1,transparent));
-  }
-  .select{
-    width: 85vw;
+.container-fluid {
+  height: 98vh;
+  padding: 3vh;
+  background: linear-gradient(298deg, rgba(55,116,182,1) 0%, rgba(87,9,121,1) 100%);
+  a {
     display: flex;
+    margin-top: 1vh;
+    height: 42vh;
+    width: 105%;
+    border: none;
+    font-size: 8vh;
+    transition: all .8s;
     justify-content: center;
-    padding-top: 1rem;
-    button {
-      width: 6.25rem;
-      height: 6.25rem;
-      font-size: 2rem;
-      color: $white-font;
-      text-align: center;
-      text-align:-moz-center;
-      text-align:-webkit-center;
-      background: transparent;
-      border-radius: 30%;
-      border-color: $border-line;
-      transition: border-radius .5s;
+    align-items: center;
+    &.index {
+      border-bottom-left-radius: 0.8em;
+      border-top-left-radius: 0.8em;
       position: relative;
-      &:first-child{
-        margin-right: 5vh;
-      }
-      &:first-child::before{
-        content: '';
-        display: block;
-        position: absolute;
-        width: 6rem;
-        height: 6rem;
-        border-radius: 50%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        background: radial-gradient($outcross 5%, transparent 70%);
-        opacity: 0;
-        transition: opacity .4s;
-      }
-      &:last-child::before{
-        content: '';
-        display: block;
-        position: absolute;
-        width: 6rem;
-        height: 6rem;
-        border-radius: 50%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        background: radial-gradient($outcross 5%, transparent 70%);
-        opacity: 0;
-        transition: opacity .4s;
-      }
-      &.checked{
-        border-radius: 50%;
-        &:first-child::before {
-          transition: opacity .9s;
-          opacity: 1;
-        }
-        &:last-child::before {
-          transition: opacity .9s;
-          opacity: 1;
-        }
+      background: linear-gradient(169deg, rgba(55,116,182,1) 0%, rgba(9,15,121,1) 100%);
+      opacity: .6;
+      left: 5vh;
+      top: 6vh;
+      &:hover {
+        z-index: 1;
       }
     }
-  }
-  .bg {
-    position: relative;
-    height: 0;    
-    img {
-      display: block;
-      margin-top: 2.2rem;
-      width: 200px;
-      opacity: 0.3;
-    }
-  }
-    .oldlist, 
-    .newlist{
+    &.stpage {
+      border-bottom-right-radius: 0.8em;
+      border-top-right-radius: 0.8em;
       position: relative;
-      overflow: auto;
-      z-index: 2;
-      height: 35vh;
-      margin: 5.5vh 0 5vh;
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-      &::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera*/
-      }
-    }
-    ol {
-      display: flex;
-      justify-items: center;
-      flex-direction: column;
-      li {
-        text-align: center;
-        width: 50vw;
-        font-size: 4vh;
-        line-height: 7vh;
-        color: $white-font;
-      }
-      li:hover,
-      li:active {
-        color: $cross;
-      }  
+      background: linear-gradient(169deg, rgba(157,213,111,1) 0%, rgba(121,120,9,1) 100%);
+      left: -10vh;
+      bottom: 4vh;
+      opacity: 0.8;
     }
   }
+}
+.container-fluid.mounted{
+  a {
+    height: 8vh;
+    font-size: 4vh;
+    &.index {
+      background: rgba(55,116,182,0.1);
+      border-bottom: 4px solid $success;
+      border-bottom-right-radius: 0.8em;
+      border-top-right-radius: 0.8em;
+      width: 100%;
+      left: 0;
+      top: -4vh;
+      &:hover {
+        background: rgba(55,116,182,0.8);
+      }
+    }
+    &.stpage {
+      width: 100%;
+      left: 0;
+      border-radius: 0;
+      background: rgba(55,116,182,0);
+      border-top:2px solid $success;
+      top: 77vh;
+      &:hover {
+        background: rgba(55,116,182,0.5);
+        color: $gray-400;
+      }
+    }
+  }
+}
 </style>
