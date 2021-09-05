@@ -13,15 +13,15 @@
       class="btn stpage">
       BACK
     </RouterLink>
-    <OldIndex />
+    <Testament />
   </div>
 </template>
 
 <script>
-import OldIndex from '~/components/OldIndex'
+import Testament from '~/components/Testament'
 export default {
   components: {
-    OldIndex
+    Testament
   },
   data(){
     return {
