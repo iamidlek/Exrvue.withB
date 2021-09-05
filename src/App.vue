@@ -1,17 +1,17 @@
 <template>
-  <StPage />
+  <RouterView />
 </template>
 
 <script>
-import StPage from '~/components/StPage'
+// import StPage from '~/routes/StPage'
 // import Index from '~/components/Index'
 // import Search from '~/components/Search'
 // import Cross from '~/components/Cross'
 
-export default {
-  components:{
-    StPage
-  },
+// export default {
+//   components:{
+//     StPage
+//   },
   // data(){
   //   return {
   //     now: 'index',
@@ -38,7 +38,7 @@ export default {
   //     }
   //   }
   // }
-}
+// }
 </script>
 
 <style lang="scss">
