@@ -1,0 +1,18 @@
+<template>
+  <div>temp</div>
+</template>
+
+<script>
+// import SearchBar from '~/components/SearchBar'
+
+
+// export default {
+//   components:{
+//     SearchBar
+//   },
+// }
+</script>
+
+<style lang="scss">
+@import "~/scss/style";
+</style>
