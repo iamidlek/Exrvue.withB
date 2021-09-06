@@ -128,9 +128,9 @@ export default {
       left: -70vh;
     }
     &.stpage {
-      position: relative;
+      position: absolute;
       width: 100%;
-      top: 86vh;
+      top: 88vh;
       left: 0;
       opacity: .7;
       font-size: 3vh;

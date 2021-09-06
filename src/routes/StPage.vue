@@ -26,6 +26,7 @@
   height: 98vh;
   padding: 3vh;
   background: linear-gradient(298deg, rgba(55,116,182,1) 0%, rgba(87,9,121,1) 100%);
+  overflow: hidden;
   a {
     display: flex;
     margin-top: 1vh;
