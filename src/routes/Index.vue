@@ -7,13 +7,18 @@
       class="btn btn-primary index">
       INDEX
     </a>
-    <RouterLink
-      :to="'/'"
-      active-class="active"
-      class="btn stpage">
+    <a
+      class="btn btn-primary search">
+      SEARCH
+    </a>
+    <a
+      @click="back"
+      class="btn btn-primary stpage">
       BACK
-    </RouterLink>
-    <Testament />
+    </a>
+    <div ref="back">
+      <Testament />
+    </div>
   </div>
 </template>
 
@@ -38,6 +43,13 @@ export default {
   methods:{
     refrash() {
       window.location.reload()
+    },
+    back() {
+      setTimeout(() => {
+        this.$router.push('/')
+      }, 1000);
+      this.$refs.back.classList.add('back')
+      this.$refs.mount.classList.remove('mounted')
     }
   }
 }
@@ -57,6 +69,7 @@ export default {
     width: 105%;
     border: none;
     font-size: 8vh;
+    color: #FFF;
     transition: all .8s;
     justify-content: center;
     align-items: center;
@@ -72,14 +85,23 @@ export default {
         z-index: 1;
       }
     }
-    &.stpage {
+    &.search {
       border-bottom-right-radius: 0.8em;
       border-top-right-radius: 0.8em;
-      position: relative;
+      position: absolute;
+      top: 42vh;
       background: linear-gradient(169deg, rgba(157,213,111,1) 0%, rgba(121,120,9,1) 100%);
       left: -10vh;
       bottom: 4vh;
       opacity: 0.8;
+    }
+    &.stpage {
+      position: absolute;
+      width: 0;
+      height: 0;
+      bottom: 0;
+      opacity: 0;
+      transition: all .1s;
     }
   }
 }
@@ -99,18 +121,31 @@ export default {
         background: rgba(55,116,182,0.8);
       }
     }
+    &.search {
+      width: 0;
+      left: -70vh;
+    }
     &.stpage {
+      position: relative;
       width: 100%;
+      top: 77vh;
       left: 0;
+      opacity: .7;
+      color: $gray-300;
       border-radius: 0;
       background: rgba(55,116,182,0);
       border-top:2px solid $success;
-      top: 77vh;
       &:hover {
-        background: rgba(55,116,182,0.5);
+        background: rgba(55,116,182,0.3);
         color: $gray-400;
       }
     }
   }
+}
+.back {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
 }
 </style>
