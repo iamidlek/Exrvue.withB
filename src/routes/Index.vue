@@ -96,12 +96,14 @@ export default {
       opacity: 0.8;
     }
     &.stpage {
-      position: absolute;
-      width: 0;
-      height: 0;
-      bottom: 0;
+      position: relative;
+      width: 100%;
+      top: 75vh;
       opacity: 0;
-      transition: all .1s;
+      transition: all .3s;
+      font-size: 3vh;
+      color: $gray-300;
+      border-radius: 0;
     }
   }
 }
@@ -131,6 +133,7 @@ export default {
       top: 77vh;
       left: 0;
       opacity: .7;
+      font-size: 3vh;
       color: $gray-300;
       border-radius: 0;
       background: rgba(55,116,182,0);

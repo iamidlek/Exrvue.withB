@@ -1,18 +1,16 @@
 <template>
-  <div class="search">
-    <div class="search-form">
-      <input
-        type="text"
-        @keydown.enter="searchMatch"
-        placeholder="God created heaven"
-        onfocus="this.placeholder = ''"
-        onblur="this.placeholder = 'God created heaven'" />
-      <div class="resultlist">
-        <ul
-          class="suggestions"
-          ref="suggestions">
-        </ul>
-      </div>
+  <div class="search-form">
+    <input
+      type="text"
+      @keydown.enter="searchMatch"
+      placeholder="God created heaven"
+      onfocus="this.placeholder = ''"
+      onblur="this.placeholder = 'God created heaven'" />
+    <div class="resultlist">
+      <ul
+        class="suggestions"
+        ref="suggestions">
+      </ul>
     </div>
   </div>
 </template>
