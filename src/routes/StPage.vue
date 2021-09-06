@@ -33,6 +33,7 @@
     width: 105%;
     border: none;
     font-size: 8vh;
+    color: #FFF;
     transition: all .6s;
     justify-content: center;
     align-items: center;
