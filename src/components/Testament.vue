@@ -1,45 +1,65 @@
 <template>
-  <div class="box">
+  <div
+    class="box"
+    ref="box">
     <label class="switch">
       <input
         type="checkbox"
-        checked />
-      <span class="slider round"></span>
+        @click="tran" />
+      <span class="slider"></span>
     </label>
+  </div>
+  <div
+    ref="indexs"
+    class="indexs">
+    <OldIdx v-if="!status" />
+    <NewIdx v-if="status" />
   </div>
 </template>
 
 <script>
+import OldIdx from '~/components/OldIdx'
+import NewIdx from '~/components/NewIdx'
+
 export default {
-  data() {
+  components:{
+    OldIdx,
+    NewIdx
+  },
+  data(){
     return {
-      btns : 'none',
-      olds : [ 'Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther', 'Job', 'Psalm', 'Proverbs', 'Ecclesiastes', 'Song of Solomon', 'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi'],
-      news : ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy', 'Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation' ]
+      status: false
     }
   },
-  methods: {
-    select(e) {
-      if (e.target.innerText === this.btns) {
-        this.btns = 'none';
-        e.target.classList.remove('checked')
-      } else {
-        this.$refs.old.classList.remove('checked')
-        this.$refs.new.classList.remove('checked')
-        this.btns = e.target.innerText
-        e.target.classList.add('checked') 
-      }      
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.$refs.box.classList.add('mounted')
+      }, 800);
+      setTimeout(() => {
+        this.$refs.indexs.classList.add('mounted')
+      }, 1200);
+    });
+  },
+  methods:{
+    tran(){
+        this.status = !this.status
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.box {
+.box, .indexs{
+  opacity: 0;
+  transition: all 2s;
+}
+.box.mounted {
   position: relative;
-  top: -10vh;
+  top: -8vh;
   display: flex;
   justify-content: center;
+  opacity: 1;
   z-index: 5;
   .switch {
     position: relative;
@@ -50,46 +70,67 @@ export default {
       opacity: 0;
       width: 0;
       height: 0;
+      
     }
   }
   .slider {
     position: absolute;
     cursor: pointer;
-    top: 0;
+    top: 1vh;
     left: 0;
     right: 0;
     bottom: 0;
     display: flex;
     align-items: center;
-    padding: 2vh;
+    padding: 0 2vh;
     justify-content: flex-start;
     overflow: hidden;
-    background-color: #D9C7B8;
-    border-radius: 2em;
+    border-top: 2px solid #A68A7B;
+    border-bottom: 2px solid #A68A7B;
     -webkit-transition: .4s;
     transition: .4s;
     &::before{
       content: "Old";
-      height: 8vh;
-      display: flex;
-      align-items: center;
+      color: #A68A7B;
+      position: absolute;
+      left: 3vh;
       font-size: 8vh;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    &::after{
+      content: "NEW";
+      color: #D9C7B8;
+      opacity: 0.5;
+      letter-spacing: -0.4vh;
+      font-size: 4vh;
+      right: 3vh;
+      position: absolute;
       -webkit-transition: .4s;
       transition: .4s;
     }
   }
   input:checked + .slider {
-    background-color: #A68A7B;
+    border-top: 2px solid #D9C7B8;
+    border-bottom: 2px solid #D9C7B8;
     &::before{
+      content: "Old";
+      opacity: 0.5;
+      font-size: 4.7vh;
+      color: #A68A7B;
+    }
+    &::after{
       content: "NEW";
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
+      color: #D9C7B8;
+      opacity: 1;
+      letter-spacing: -0.4vh;
+      font-size: 7vh;
+      right: 3vh;
+      position: absolute;
     }
   } 
-  input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-  }
 }
-
+.indexs.mounted{
+  opacity: 1;
+}
 </style>
