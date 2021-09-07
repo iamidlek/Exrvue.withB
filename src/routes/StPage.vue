@@ -16,7 +16,6 @@
 </template>
 
 <script>
-// import Search from '~/components/Search';
 </script>
 
 <style lang="scss" scoped>
