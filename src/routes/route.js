@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Start from './StPage'
 import Search from './Search'
 import Index from './Index'
+import PickSearch from './PickSearch'
 
 export default createRouter({
 
@@ -14,8 +15,18 @@ export default createRouter({
     },
     {
       path: '/search',
-      component: Search
+      component: Search,
+      children: [
+        {
+          path: 'picksearch',
+          component: PickSearch
+        },
+      ]
     },
+    // {
+    //   path: '/picksearch',
+    //   component: PickSearch
+    // },
     {
       path: '/index',
       component: Index
