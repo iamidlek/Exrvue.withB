@@ -1,5 +1,7 @@
 <template>
-  <div class="search-form">
+  <div
+    class="search-form"
+    ref="form">
     <div
       class="old-name"
       @click="oopen">
@@ -9,12 +11,23 @@
       class="old-book"
       ref="oldb">
       <div
+        key="All Old Testament"
+        class="book">
+        <input
+          type="checkbox"
+          value="All Old Testament"
+          v-model="selected"
+          id="All Old Testament" />
+        <label for="All Old Testament">All Old Testament</label>
+      </div>
+      <div
         v-for="old in olds"
         :key="old"
         class="book">
         <input
           type="checkbox"
-          v-model="$data[old]"
+          :value="old"
+          v-model="selected"
           :id="old" />
         <label :for="old">{{ old }}</label>
       </div>
@@ -28,33 +41,66 @@
       class="new-book"
       ref="newb">
       <div
+        key="All New Testament"
+        class="book">
+        <input
+          type="checkbox"
+          value="All New Testament"
+          v-model="selected"
+          id="All New Testament" />
+        <label for="All New Testament">All New Testament</label>
+      </div>
+      <div
         v-for="newb in news"
         :key="newb"
         class="book">
         <input
           type="checkbox"
-          v-model="$data[newb]"
+          :value="newb"
+          v-model="selected"
           :id="newb" />
         <label :for="newb">{{ newb }}</label>
       </div>
     </div>
-    <div class="next">
-      <div class="arrow"></div>
-    </div>
+    <a
+      class="next"
+      @click="pick">
+      Go to Pick Search
+    </a>
   </div>
+  <RouterView />
 </template>
 
 <script>
 export default {
   data(){
     return {
-      olds : ['All Old Testament','Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther', 'Job', 'Psalm', 'Proverbs', 'Ecclesiastes', 'Song of Solomon', 'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi'],
-      news : ['All New Testament','Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy', 'Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation' ],
+      olds : ['Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther', 'Job', 'Psalm', 'Proverbs', 'Ecclesiastes', 'Song of Solomon', 'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi'],
+      news : ['Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy', 'Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation' ],
       clo1 : true,
-      clo2 : true
+      clo2 : true,
+      selected: []
     }
   },
+  provide() {
+    return {
+      list: this.selected
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.$refs.form.classList.add('mounted')
+      }, 700);
+    });
+  },
   methods: {
+    pick(){
+      setTimeout(() => {
+        this.$router.push('/search/picksearch')
+      }, 1000);
+      this.$refs.form.classList.add('pick')
+    },
     oopen(){
       if (this.clo1){
         this.clo1 = !this.clo1
@@ -72,17 +118,25 @@ export default {
         this.clo2 = !this.clo2
         this.$refs.newb.classList.remove('open')
       }
-    }
+    },
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.search-form {
+.search-form{
+  opacity: 0;
+  transition: all .5s;
+}
+.search-form.mounted {
   width: 100%;
   height: 84vh;
   margin-top: 1vh;
+  opacity: 1;
+  overflow: hidden;
   position: relative;
+  transition: all .4s;
   .old-name{
     color: #A68A7B;
     font-weight: 700;
@@ -102,6 +156,7 @@ export default {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    opacity: 0;
   }
   label {
     box-sizing: border-box;
@@ -142,26 +197,24 @@ export default {
       border: none;
     }
   }
-  .next {
+  .next{
     position: absolute;
-    width: 1px;
-    height: 1px;
+    font-size: 2.5vh;
+    color: #eee;
     bottom: 0;
     right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    .arrow{
-      position: absolute;
-      width: 2.5vh;
-      height: 2.5vh;
-      bottom: 3vh;
-      right: 2vh; 
-      border-top: 3px solid white;
-      border-right: 3px solid white;
-      transform: rotate(45deg);
-      cursor: pointer;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .4s;
+    &:hover{
+      color: #000;
     }
   }
+}
+.search-form.pick {
+  height: 0;
 }
 </style>
