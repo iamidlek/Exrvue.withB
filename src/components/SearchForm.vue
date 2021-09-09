@@ -82,17 +82,11 @@ export default {
       selected: []
     }
   },
-  provide() {
-    return {
-      list: this.selected
-    }
-  },
   mounted() {
-    this.$nextTick(() => {
-      setTimeout(() => {
-        this.$refs.form.classList.add('mounted')
+    setTimeout(() => {
+      this.$refs.form.classList.add('mounted')
+      this.$store.commit('select/loadBible')
       }, 700);
-    });
   },
   methods: {
     pick(){
@@ -100,6 +94,9 @@ export default {
         this.$router.push('/search/picksearch')
       }, 1000);
       this.$refs.form.classList.add('pick')
+      this.$store.commit('select/select', {
+        selected: [...this.selected]
+      })
     },
     oopen(){
       if (this.clo1){
@@ -119,7 +116,6 @@ export default {
         this.$refs.newb.classList.remove('open')
       }
     },
-
   }
 }
 </script>
