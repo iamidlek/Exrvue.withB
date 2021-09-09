@@ -5,6 +5,7 @@
     <div class="detail">
       <input
         type="text"
+        ref="input"
         @keydown.enter="searchMatch"
         placeholder="God created heaven"
         onfocus="this.placeholder = ''"
@@ -20,8 +21,6 @@
         <ul
           class="suggestions"
           ref="suggestions">
-          <li>sdjllksjfsd</li>
-          <li>{{ list }}</li>
         </ul>
       </div>
     </div>
@@ -29,18 +28,13 @@
 </template>
 
 <script>
-import kjvBible from "../../public/en_en.json"
 export default {
   data(){
     return{
-      kjvBible,
+      results: []
     }
   },
-  props: {
-    list: {
-      type: Array,
-      default: () => []
-    },
+  computed: {
   },
   mounted() {
     this.$nextTick(() => {
@@ -51,18 +45,33 @@ export default {
   },
   methods: {
     searchMatch(){
-      // const e = document.querySelector('.detail input')
-      // this.kjvBible.forEach( book => {
-      //   console.log(book.name)
+      if (this.$refs.input.value) {
+        // 셀렉티드 된 책만 가져오기
+        const books = this.$store.state.select.bible.filter(book => {
+          const regex = new RegExp(this.$store.state.select.selected.join('|'))
+          return regex.test(book.name)
+          })
         
-      // })
-      console.log(this.selected)
-    }
-  },
+        const inputVal = new RegExp(this.$refs.input.value,'gi')
+        
+        // 해당 절만 가져오기
+        const verses = books.filter(verse => {
+          return inputVal.test(verse.content)
+          })
+        
+        // 변환 및 붙이기
+        const html = verses.map(verse => {
+          const highLight = verse.content.replace(inputVal,`<span class="hl">${this.$refs.input.value}</span>`)
+          return `<li><p class="infos">${verse.name} ${verse.chapter} : ${verse.verse}</p>${highLight}</li>`
+        }).join('')
+        this.$refs.suggestions.innerHTML = html;
+      }
+    },
+  }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~/scss/style";
 .pickpage {
   opacity: 0;
@@ -87,11 +96,13 @@ export default {
     }
   .probe {
     width: 5em;
+    text-align: center;
     border: 3px dashed $primary;
     opacity: 0.8;
-    font-size: 2vh;
+    font-size: 0.8em;
     color: #eee;
     font-weight: 700;
+    flex: 0;
     }
   }
   .result-form{
@@ -110,13 +121,14 @@ export default {
           display: none; /* Chrome, Safari, Opera*/
         }
         li {
+          position: relative;
           text-align: start;
           width: 100%;
           max-height: 12vh;
           overflow: auto;
           padding: 8px 10px;
           font-size: 3.5vh;
-          line-height: 5.5vh;
+          line-height: 5vh;
           color: #eee;
           border-bottom: 2px dashed #A68A7B;
           -ms-overflow-style: none; /* IE and Edge */
@@ -126,6 +138,20 @@ export default {
           }
           & + li {
             margin-top: 10px;
+          }
+          .infos {
+            -ms-user-select: none; 
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            font-size: 2vh;
+            line-height: 2vh;
+            color: $gray-500;
+            margin-bottom: 0.2em;
+          }
+          .hl {
+            color: $orange-400;
           }
         }
       }
