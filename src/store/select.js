@@ -19,6 +19,7 @@ export default {
       .then(data => state.bible.push(...data));
     },
     select(state, payload) {
+      console.log(payload.selected)
       state.selected = payload.selected
     },
   },
