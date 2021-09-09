@@ -14,6 +14,7 @@
         key="All Old Testament"
         class="book">
         <input
+          @click="all"
           type="checkbox"
           value="All Old Testament"
           v-model="selected"
@@ -25,11 +26,13 @@
         :key="old"
         class="book">
         <input
+          class="oldbtn"
           type="checkbox"
           :value="old"
           v-model="selected"
           :id="old" />
-        <label :for="old">{{ old }}</label>
+        <label
+          :for="old">{{ old }}</label>
       </div>
     </div>
     <div
@@ -44,17 +47,20 @@
         key="All New Testament"
         class="book">
         <input
+          @click="all"
           type="checkbox"
           value="All New Testament"
           v-model="selected"
           id="All New Testament" />
-        <label for="All New Testament">All New Testament</label>
+        <label
+          for="All New Testament">All New Testament</label>
       </div>
       <div
         v-for="newb in news"
         :key="newb"
         class="book">
         <input
+          class="newbtn"
           type="checkbox"
           :value="newb"
           v-model="selected"
@@ -116,6 +122,13 @@ export default {
         this.$refs.newb.classList.remove('open')
       }
     },
+    all(e){
+      if (e.target.value === 'All Old Testament') {
+        e.target.checked ? this.selected = ['All Old Testament',...this.olds] : this.selected = []
+      } else {
+        e.target.checked ? this.selected = ['All New Testament',...this.news] : this.selected = []
+      }
+    }
   }
 }
 </script>
@@ -165,6 +178,11 @@ export default {
     color: #DDD;
     border-radius: 2vh;
     transition: all .4s;
+    -ms-user-select: none; 
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
   .old-book,
   .new-book {
@@ -192,7 +210,7 @@ export default {
       color: #000;
       background-image: linear-gradient(to left bottom, #d58990, #d58aa3, #ce8eb7, #c094ca, #ab9cda, #96a5e6, #7daeed, #60b7ef, #3fc1ee, #1ecae8, #19d2dc, #3ad8cd);
       opacity: .9;
-      border: none;
+      border-color: transparent;
     }
   }
   .next{
